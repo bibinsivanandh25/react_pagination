@@ -1,13 +1,12 @@
-import { Fragment } from "react";
-import Pagination from "./components/Pagination";
+import Pagination from "./components/Pagination/Pagination.jsx";
 import Navbar from "./pages/Navbar";
 
 function App() {
   return (
-    <Fragment>
+    <section className="mainContainer">
       <Navbar />
       <Pagination />
-    </Fragment>
+    </section>
   );
 }
 

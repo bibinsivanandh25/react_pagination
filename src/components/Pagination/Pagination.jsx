@@ -78,26 +78,39 @@
 import React, { useEffect, useState } from "react";
 import "./pagination.css";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
+import { InfinitySpin } from "react-loader-spinner";
+import Loader from "../Loader/Loader";
 
 const Pagination = () => {
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
   const [total, setTotal] = useState(0);
 
   const fetchProducts = async () => {
-    const res = await fetch(
-      `https://dummyjson.com/products?limit=10&skip=${page * 10 - 10}`
-    );
-    const data = await res.json();
-    if (data && data.products) {
-      setProducts(data.products);
-      setTotal(data.total / 10);
+    setLoading(true);
+    try {
+      const res = await fetch(
+        `https://dummyjson.com/products?limit=10&skip=${page * 10 - 10}`
+      );
+      const data = await res.json();
+      if (data && data.products) {
+        setProducts(data.products);
+        setTotal(data.total / 10);
+      }
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     fetchProducts();
   }, [page]);
+
+  if (loading) {
+    return <Loader />;
+  }
 
   const selectPageHandler = (selectedPage) => {
     if (selectedPage >= 1 && selectedPage <= total && selectedPage !== page) {
