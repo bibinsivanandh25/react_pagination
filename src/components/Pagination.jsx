@@ -77,6 +77,7 @@
 
 import React, { useEffect, useState } from "react";
 import "./pagination.css";
+import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 
 const Pagination = () => {
   const [products, setProducts] = useState([]);
@@ -123,14 +124,17 @@ const Pagination = () => {
             onClick={() => selectPageHandler(page - 1)}
             className={page > 1 ? "" : "pagination__disabled"}
           >
-            ◀️
+            <GrFormPrevious size={20} />
           </span>
           {[...Array(total)].map((_, i) => {
             return (
               <span
                 key={i}
                 onClick={() => selectPageHandler(i + 1)}
-                className={page === i + 1 ? "pagination__selected" : ""}
+                className={
+                  (page === i + 1 ? "pagination__selected" : "",
+                  "pagination__block")
+                }
               >
                 {i + 1}
               </span>
@@ -140,7 +144,7 @@ const Pagination = () => {
             onClick={() => selectPageHandler(page + 1)}
             className={page < total ? "" : "pagination__disabled"}
           >
-            ▶️
+            <GrFormNext size={20} />
           </span>
         </div>
       )}
